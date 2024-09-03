@@ -1,0 +1,39 @@
+server:
+  port: 8080  # API Gateway running on port 8080
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: api-authentication
+          uri: lb://API-AUTHENTICATION  # Auth Service, resolved by Eureka
+          predicates:
+            - Path=/auth/**  # Match all paths starting with /auth
+        - id: reservation-service
+          uri: lb://RESERVATION-SERVICE  # Reservation Service, resolved by Eureka
+          predicates:
+            - Path=/reservations/**  # Match all paths starting with /reservations
+          filters:
+            - RewritePath=/reservations/(?<segment>.*), /${segment}  # Strip /reservations prefix from path
+            - AddRequestHeader=Authorization, ${header.Authorization}  # Forward the Authorization header
+        
+        - id: restaurant-service
+          uri: lb://RESTAURANT-SERVICE  # Restaurant Service, resolved by Eureka
+          predicates:
+            - Path=/restaurants/**  # Match all paths starting with /restaurants
+          filters:
+            - RewritePath=/restaurants/(?<segment>.*), /${segment}  # Strip /restaurants prefix from path
+            - AddRequestHeader=Authorization, ${header.Authorization}  # Forward the Authorization header
+
+    loadbalancer:
+      retry:
+        enabled: true
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    preferIpAddress: true
