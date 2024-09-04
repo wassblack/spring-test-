@@ -6,6 +6,7 @@ package com.manageo.api.gataway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 
 /**
@@ -13,6 +14,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author wassim
  */
 @SpringBootApplication
+@ComponentScan(basePackages = {
+    "com.manageo.api.gataway",       
+    "com.manageo.api.gataway.config",
+})
 public class ApiGataway {
 
     public static void main(String[] args) {

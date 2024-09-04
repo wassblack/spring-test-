@@ -1,5 +1,5 @@
 server:
-  port: 8080  # API Gateway running on port 8080
+  port: 8080
 
 spring:
   application:
@@ -8,24 +8,23 @@ spring:
     gateway:
       routes:
         - id: api-authentication
-          uri: lb://API-AUTHENTICATION  # Auth Service, resolved by Eureka
+          uri: lb://API-AUTHENTICATION
           predicates:
-            - Path=/auth/**  # Match all paths starting with /auth
+            - Path=/auth/**
+
         - id: reservation-service
-          uri: lb://RESERVATION-SERVICE  # Reservation Service, resolved by Eureka
+          uri: lb://RESERVATION-SERVICE
           predicates:
-            - Path=/reservations/**  # Match all paths starting with /reservations
+            - Path=/reservations/**
           filters:
-            - RewritePath=/reservations/(?<segment>.*), /${segment}  # Strip /reservations prefix from path
-            - AddRequestHeader=Authorization, ${header.Authorization}  # Forward the Authorization header
-        
+            - RewritePath=/reservations/(?<segment>.*), /${segment}
+
         - id: restaurant-service
-          uri: lb://RESTAURANT-SERVICE  # Restaurant Service, resolved by Eureka
+          uri: lb://RESTAURANT-SERVICE
           predicates:
-            - Path=/restaurants/**  # Match all paths starting with /restaurants
+            - Path=/restaurants/**
           filters:
-            - RewritePath=/restaurants/(?<segment>.*), /${segment}  # Strip /restaurants prefix from path
-            - AddRequestHeader=Authorization, ${header.Authorization}  # Forward the Authorization header
+            - RewritePath=/restaurants/(?<segment>.*), /${segment}
 
     loadbalancer:
       retry:

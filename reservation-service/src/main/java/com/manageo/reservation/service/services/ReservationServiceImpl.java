@@ -6,6 +6,8 @@ import com.manageo.reservation.service.repository.ReservationRepository;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -27,8 +29,8 @@ public class ReservationServiceImpl {
         return reservationRepository.findById(id);
     }
 
-    public List<Reservation> getAllReservations() {
-        return reservationRepository.findAll();
+    public Page<Reservation> getAllReservations(Pageable pageable) {
+        return reservationRepository.findAll(pageable);
     }
 
     public Reservation updateReservation(Long id, Reservation updatedReservation) {
