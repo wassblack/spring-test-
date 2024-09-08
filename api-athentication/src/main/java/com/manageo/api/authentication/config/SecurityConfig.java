@@ -24,7 +24,7 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())  
             .authorizeHttpRequests(authz -> authz
-                .requestMatchers("/eureka/**", "/auth/**").permitAll()  
+                .requestMatchers("/auth/**").permitAll()  
                 .anyRequest().authenticated() 
             )
             .formLogin(withDefaults())  
