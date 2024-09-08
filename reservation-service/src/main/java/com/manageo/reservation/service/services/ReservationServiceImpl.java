@@ -21,7 +21,6 @@ public class ReservationServiceImpl {
     private ReservationRepository reservationRepository;
 
     public Reservation createReservation(Reservation reservation) {
-        // Check availabity
         return reservationRepository.save(reservation);
     }
 

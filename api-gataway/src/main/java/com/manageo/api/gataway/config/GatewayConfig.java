@@ -31,7 +31,7 @@ public class GatewayConfig {
                 .build();
 
         UserDetails user1 = User.builder()
-                .username("pooja")
+                .username("test")
                 .password(passwordEncoder().encode("123"))
                 .roles("ADMIN")
                 .build();
